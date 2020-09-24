@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    name: <input value="asd" id="name" type="text" placeholder="请输入姓名"><br>
+    password: <input value="asd" id="password" type="text" placeholder="请输入密码"><br>
+    <button onclick="login()">登录</button>
+    <button onclick="register()">注册</button>
+    <!-- <button onclick="verify()">验证</button> -->
+
+    <script src="/js/jquery.min.js"></script>
+    <script>
+        var token = "";
+        function login() {
+            $.ajax({
+                type: "post",
+                url: "/login",
+                data: getData(),
+                success(res) {
+                    console.log(res);
+                    token = res.token;
+                    // window.location.href = "/index"
+                }
+            })
+        }
+        function register() {
+            $.ajax({
+                type: "post",
+                url: "/register",
+                headers: {
+                    authorization: token
+                },
+                data: getData(),
+                success(res) {
+                    console.log(res);
+                }
+            })
+        }
+        // function verify() {
+        //     $.ajax({
+        //         type: "post",
+        //         url: "/verify",
+        //         headers: {
+        //             authorization: token
+        //         },
+        //         success(res) {
+        //             console.log(res);
+        //         }
+        //     })
+        // }
+        function getData() {
+            return {
+                name: $("#name").val(),
+                password: $("#password").val()
+            }
+        }
+    </script>
+</body>
+
+</html>
