@@ -6,7 +6,7 @@ function setToken(username, userid) {
         var token = 'Bearer ' + jwt.sign({
             name: username,
             _id: userid
-        }, signkey, { expiresIn: 5 });
+        }, signkey, { expiresIn: 3600 * 24 });
         resolve(token)
     })
 }
